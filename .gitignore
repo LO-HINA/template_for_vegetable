@@ -1,0 +1,20 @@
+# 1. 屏蔽保密配置文件（核心）
+.env
+secret_settings.py
+
+# 2. 屏蔽 Python 运行产生的缓存（让 GitHub 仓库保持干净）
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# 3. 屏蔽虚拟环境文件夹（太大，不需要上传）
+venv/
+env/
+.venv/
+
+# 4. 屏蔽媒体资源（可选：如果你不想把本地测试的蔬菜图片传上去）
+media/
+
+# 5. 屏蔽 IDE 配置文件
+.idea/
+.vscode/

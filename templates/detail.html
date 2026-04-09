@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}蔬菜详情{% endblock %}
+
+{% block head %}
+<style>
+    body {
+        font-family: 'Noto Sans SC', sans-serif;
+        background-color: #f8f9fa;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <!-- 顶部：图片 + 标题 -->
+            <div class="md:flex">
+                <div class="flex-shrink-0">
+                    <img
+                        src="{{ vegetable.picture }}"
+                        alt="{{ vegetable.name }}"
+                        class="w-56 h-56 object-cover"
+                    />
+                </div>
+                <div class="p-6 md:p-8">
+                    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ vegetable.name }}</h1>
+                    <p class="text-green-600 font-semibold text-lg mb-4">¥{{ vegetable.price }}/ 公斤</p>
+                    <div class="flex items-center text-sm text-gray-500 mb-4">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded">{{ vegetable.category.name }}</span>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed">
+                        {{ vegetable.content }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- 详细信息表格（非 table 标签） -->
+            <div class="border-t border-gray-200 p-6 md:p-8">
+                <h2 class="text-xl font-bold text-gray-800 mb-6">详细信息</h2>
+                <div class="space-y-4">
+                    <!-- 蔬菜类型 -->
+                    <div class="flex flex-col sm:flex-row">
+                        <div class="w-32 font-medium text-gray-700 flex-shrink-0">蔬菜类型</div>
+                        <div class="mt-1 sm:mt-0 sm:ml-4 text-gray-900">{{ vegetable.category.name }}</div>
+                    </div>
+
+                    <!-- 价格 -->
+                    <div class="flex flex-col sm:flex-row">
+                        <div class="w-32 font-medium text-gray-700 flex-shrink-0">价格</div>
+                        <div class="mt-1 sm:mt-0 sm:ml-4 text-gray-900">¥{{ vegetable.price }} / 公斤</div>
+                    </div>
+
+                    <!-- 供应商名称 -->
+                    <div class="flex flex-col sm:flex-row">
+                        <div class="w-32 font-medium text-gray-700 flex-shrink-0">供应商</div>
+                        <div class="mt-1 sm:mt-0 sm:ml-4 text-gray-900">{{ vegetable.provider }}</div>
+                    </div>
+
+                    <!-- 联系方式 -->
+                    <div class="flex flex-col sm:flex-row">
+                        <div class="w-32 font-medium text-gray-700 flex-shrink-0">联系方式</div>
+                        <div class="mt-1 sm:mt-0 sm:ml-4 text-gray-900">
+                            <a href="tel:{{ vegetable.mobile }}" class="text-green-600 hover:underline">{{ vegetable.mobile }}</a>
+                        </div>
+                    </div>
+
+                    <!-- 产地 -->
+                    <div class="flex flex-col sm:flex-row">
+                        <div class="w-32 font-medium text-gray-700 flex-shrink-0">产地</div>
+                        <div class="mt-1 sm:mt-0 sm:ml-4 text-gray-900">{{ vegetable.place }}</div>
+                    </div>
+
+                    <!-- 采摘日期 -->
+                    <div class="flex flex-col sm:flex-row">
+                        <div class="w-32 font-medium text-gray-700 flex-shrink-0">采摘日期</div>
+                        <div class="mt-1 sm:mt-0 sm:ml-4 text-gray-900">{{ vegetable.pub_date }}</div>
+                    </div>
+
+                    <!-- 保质期 -->
+                    <div class="flex flex-col sm:flex-row">
+                        <div class="w-32 font-medium text-gray-700 flex-shrink-0">保质期</div>
+                        <div class="mt-1 sm:mt-0 sm:ml-4 text-gray-900">冷藏 5 天</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="border-t border-gray-200 p-6 md:p-8 bg-gray-50 flex flex-col sm:flex-row justify-end gap-3">
+                <button class="px-6 py-2 border border-green-500 text-green-600 rounded-lg font-medium hover:bg-green-50 transition-colors">
+                    加入收藏
+                </button>
+                <button class="px-6 py-2 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors">
+                    立即订购
+                </button>
+            </div>
+        </div>
+{% endblock %}
+
+
+
+
+

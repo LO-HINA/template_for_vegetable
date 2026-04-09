@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}发布{% endblock %}
+
+{% block head %}
+<style>
+    body {
+        font-family: 'Noto Sans SC', sans-serif;
+        background-color: #f8f9fa;
+    }
+</style>
+<script src="../static/pub.js"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="p-6 md:p-8">
+            <h1 class="text-2xl font-bold text-gray-900 mb-6">发布新蔬菜</h1>
+
+            <!-- 图片上传 -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">蔬菜图片</label>
+                <div class="flex items-center space-x-4">
+                    <!-- 预览容器 -->
+                    <label for="image-upload" id="image-preview-container"
+                         class="w-56 h-56 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
+                        <img id="image-preview" class="w-full h-full object-cover rounded-lg hidden" alt="预览图"/>
+                        <div id="image-placeholder" class="text-center px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400 mx-auto mb-2"
+                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                            </svg>
+                            <span class="text-sm text-gray-500">点击上传图片（建议 224×224）</span>
+                        </div>
+                        <input type="file" id="image-upload" class="hidden" accept="image/*"/>
+                    </label>
+                    <div class="text-sm text-gray-500 max-w-xs">
+                        支持 JPG、PNG 格式，文件大小不超过 5MB。
+                    </div>
+                </div>
+            </div>
+            <form class="space-y-6" method="POST" action="/pub" enctype="multipart/form-data">
+                <input type="hidden" id="picture" name="picture" value="">
+                <!-- 蔬菜分类 -->
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700 mb-2">蔬菜分类</label>
+                    <select id="category"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+                            name="category"
+                    >
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- 名称 -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">蔬菜名称</label>
+                    <input type="text" id="name"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+                           name="name"
+                           placeholder="例如：有机甜豌豆"/>
+                </div>
+
+                <!-- 描述内容 -->
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">描述内容</label>
+                    <textarea id="description" rows="4"
+                              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+                              name="content"
+                              placeholder="请简要描述蔬菜的特点、口感、适合做法等..."></textarea>
+                </div>
+
+                <!-- 价格 -->
+                <div>
+                    <label for="price" class="block text-sm font-medium text-gray-700 mb-2">价格（元/公斤）</label>
+                    <input type="number" id="price" min="0" step="0.01"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+                           name="price"
+                           placeholder="例如：12.50"/>
+                </div>
+
+                <!-- 产地 -->
+                <div>
+                    <label for="origin" class="block text-sm font-medium text-gray-700 mb-2">产地</label>
+                    <input type="text" id="origin"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+                           name="place"
+                           placeholder="例如：云南省大理州"/>
+                </div>
+
+                <!-- 供应商名称 -->
+                <div>
+                    <label for="supplier" class="block text-sm font-medium text-gray-700 mb-2">供应商名称</label>
+                    <input type="text" id="supplier"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+                           name="provider"
+                           placeholder="例如：绿源生态农业有限公司"/>
+                </div>
+
+                <!-- 联系电话 -->
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">联系电话</label>
+                    <input type="tel" id="phone"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+                           name="mobile"
+                           placeholder="例如：13812345678"/>
+                </div>
+
+                <!-- 提交按钮 -->
+                <div class="pt-4 flex justify-end">
+                    <button type="submit"
+                            class="px-6 py-2.5 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                        发布蔬菜
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

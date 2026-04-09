@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} | 蔬菜供应商模板 </title>
+    <link rel="stylesheet" href="../static/base.css">
+    <script src="../static/tailwind.js"></script>
+    <script src="../static/jquery-3.7.1.min.js"></script>
+    {% block head %}{% endblock %}
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center">
+                    <span class="text-white font-bold text-xl">model</span>
+                </div>
+                <h1 class="text-xl font-bold text-gray-800">蔬菜模板</h1>
+            </div>
+
+            <!-- 导航菜单 -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="/" class="text-gray-600 hover:text-green-600 font-medium transition-colors">首页</a>
+                <a href="/pub" class="text-gray-600 hover:text-green-600 font-medium transition-colors">发布</a>
+            </nav>
+
+
+            {% if user %}
+                <div class="relative group">
+                    <button class="flex items-center space-x-2 text-gray-700 hover:text-green-600 font-medium transition-colors focus:outline-none">
+                        <span>{{ user.username }}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+
+                    <!-- 悬浮下拉菜单：通过 group-hover 控制显示 -->
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out">
+                        <form method="POST" action="/logout">
+                            <button type="submit"
+                                    class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
+                                退出登录
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <!-- 登录和注册按钮 -->
+                <div class="flex items-center space-x-4">
+                    <button class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                        <a href="/login">登录</a>
+                    </button>
+                    <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                        <a href="/register">注册</a>
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</header>
+<!-- 分类导航栏 -->
+<div class="bg-white border-b">
+    <div class="container mx-auto px-4">
+        <div class="flex overflow-x-auto py-3 space-x-6 hide-scrollbar">
+            <a href="/" class="category-tab {{ 'active' if category_id==None else ''}}
+             font-medium text-gray-900 whitespace-nowrap">全部</a>
+            {% for category in categories %}
+                <a href="/?category={{ category.id }}"
+               class="category-tab font-medium text-gray-500 hover:text-gray-900
+                whitespace-nowrap {{ 'active' if category_id==category.id else ''}}">{{ category.name}}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- 主要内容区域 -->
+<main class="container mx-auto px-4 py-8 flex-1">
+    {% block main %}{% endblock %}
+</main>
+<!-- 页脚 -->
+<footer class="bg-gray-800 text-white py-6 mt-8">
+    <div class="px-2">
+        <div class="flex flex-col sm:flex-row justify-center items-center">
+            <div class="flex flex-wrap justify-center gap-3 text-xs">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">关于我们</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">联系我们</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">隐私政策</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">用户协议</a>
+            </div>
+        </div>
+        <div class="mt-4 text-center text-gray-500 text-xs">
+            © 阿八八八八八八八。
+        </div>
+    </div>
+</footer>
+
+<style>
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+</body>
+</html>
